@@ -3,7 +3,7 @@ from rclpy.node import Node
 from math import cos, sin, pi, atan, sqrt
 import numpy as np
 
-from final_proj.homogeneous_xforms import H, A, T, d
+from final_proj.homogeneous_xforms import T, d, R
 
 from sensor_msgs.msg import JointState
 from geometry_msgs.msg import Pose, Point, Quaternion
@@ -54,12 +54,51 @@ class FwdKinematicsNode(Node):
         
         msg = Pose()
         msg.position = Point()
+        q = Quaternion()
         
         pos = d(xform)
+        rot = R(xform)
         
         msg.position.x = pos[0]
         msg.position.y = pos[1]
         msg.position.z = pos[2]
+
+        # Now, need to calculate the Quaternion representation of the matrix xform
+        # Code found here: https://d3cw3dd2w32x2b.cloudfront.net/wp-content/uploads/2015/01/matrix-to-quat.pdf
+        
+        t = 0
+        if rot[2,2] < 0:
+            if rot[0,0] > rot[1,1]:
+                t = 1 + rot[0,0] - rot[1,1] - rot[2,2]
+                q.x = t
+                q.y = rot[1,0] + rot[0,1]
+                q.z = rot[2,0] + rot[0,2]
+                q.w = rot[1,2] + rot[2,1]
+            else:
+                t = 1 - rot[0,0] + rot[1,1] - rot[2,2]
+                q.x = rot[0,1] + rot[1,0]
+                q.y = t
+                q.z = rot[1,2] + rot[2,1]
+                q.w = rot[2,0] - rot[0,2]
+        else:
+            if rot[0,0] < -rot[1,1]:
+                t = 1 - rot[0,0] - rot[1,1] + rot[2,2]
+                q.x = rot[2,0] + rot[0,2]
+                q.y = rot[1,2] + rot[2,1]
+                q.z = t
+                q.w = rot[0,1] - rot[1,0]
+            else:
+                t = 1 + rot[0,0] + rot[1,1] + rot[2,2]
+                q.x = rot[1,2] - rot[2,1]
+                q.y = rot[2,0] - rot[0,2]
+                q.z = rot[0,1] - rot[1,0]
+                q.w = t
+        q.x = q.x * 0.5 / sqrt(t)
+        q.y = q.y * 0.5 / sqrt(t)
+        q.z = q.z * 0.5 / sqrt(t)
+        q.w = q.w * 0.5 / sqrt(t)
+
+        msg.orientation = q
         self.fwd_kin_publisher.publish(msg)
 
 def main(args=None):

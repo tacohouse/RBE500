@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 from open_manipulator_msgs.srv import SetJointPosition
 import sys
+from math import pi
 
 
 class BasicRobotControl(Node):
@@ -19,7 +20,7 @@ class BasicRobotControl(Node):
         request = SetJointPosition.Request()
         request.planning_group = ''
         request.joint_position.joint_name = ['joint1', 'joint2', 'joint3', 'joint4', 'gripper']
-        request.joint_position.position = [0.0, -0.3, 0.3, -1.0, 1.0]
+        request.joint_position.position = [-2.8, 0.8, -1.3, 1.2, 0.0]
         request.path_time = 10.0
 
         self.future = self.client.call_async(request)
