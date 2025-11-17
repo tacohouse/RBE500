@@ -26,7 +26,7 @@ def param_A(a, theta, d, alpha):
 # Calculated DH parameters for the arm we're using (leaving out the joint parameters)
 #  In the order of (a, theta, d, alpha) for linkages 1-4
 dh_base_params = np.array([
-    [0,0,96.326,pi/2],
+    [0,pi,96.326,pi/2],
     [130.231,100.62*pi/180,0,0],
     [124,79.38*pi/180,0,0],
     [133.4,0,0,0]

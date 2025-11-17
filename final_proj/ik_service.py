@@ -24,7 +24,8 @@ class IKService(Node):
         self.declare_parameter('x', 0.0)
         self.declare_parameter('y', 0.0)
         self.declare_parameter('z', 0.0)
-        
+        self.declare_parameter('alpha', 0.0)
+
         # Create service
         self.srv = self.create_service(Trigger, 'compute_ik', self.compute_ik_service)
         
@@ -35,8 +36,8 @@ class IKService(Node):
         x = self.get_parameter('x').value
         y = self.get_parameter('y').value
         z = self.get_parameter('z').value
-        
-        alpha = 0.0
+        alpha = self.get_parameter('alpha').value
+
         
         try:
             theta1, theta2, theta3, theta4 = self.compute_ik(x, y, z, alpha)

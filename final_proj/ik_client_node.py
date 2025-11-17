@@ -1,7 +1,9 @@
 import rclpy
 from rclpy.node import Node
 from open_manipulator_msgs.srv import SetKinematicsPose
-import sys
+import sys, math
+
+
 
 class IKClientNode(Node):
     def __init__(self):
@@ -47,8 +49,8 @@ def main(args=None):
     
     # Testing 3 different positions (in millimeters)
     test_positions = [
-        (281, 0.0, 224),      # Position 1
-        (200, 100, 150),      # Position 2
+        (283, 0.0, 217),      # Position 1 (home)
+        (143, 244, 215),      # Position 2 (-210 0 0)
         (150, -50, 180)       # Position 3
     ]
     

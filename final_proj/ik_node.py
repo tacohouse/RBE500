@@ -58,11 +58,11 @@ class InverseKinematicsNode(Node):
             
             # Log the solution
             self.get_logger().info('\n' + '=' * 60)
-            self.get_logger().info(f'IK Solution for position ({x:.1f}, {y:.1f}, {z:.1f}) mm:')
-            self.get_logger().info(f'Joint 1: {theta1:7.2f}degrees = {radians(theta1):7.4f} rad')
-            self.get_logger().info(f'Joint 2: {theta2:7.2f}degrees = {radians(theta2):7.4f} rad')
-            self.get_logger().info(f'Joint 3: {theta3:7.2f}degrees = {radians(theta3):7.4f} rad')
-            self.get_logger().info(f'Joint 4: {theta4:7.2f}degrees = {radians(theta4):7.4f} rad')
+            self.get_logger().info(f'IK Solution for position ({x:.1f}, {y:.1f}, {z:.1f}) mm:\n')
+            self.get_logger().info(f'Joint 1: {theta1:7.2f}degrees = {radians(theta1):7.4f} rad\n')
+            self.get_logger().info(f'Joint 2: {theta2:7.2f}degrees = {radians(theta2):7.4f} rad\n')
+            self.get_logger().info(f'Joint 3: {theta3:7.2f}degrees = {radians(theta3):7.4f} rad\n')
+            self.get_logger().info(f'Joint 4: {theta4:7.2f}degrees = {radians(theta4):7.4f} rad\n')
             self.get_logger().info('=' * 60 + '\n')
             
         except Exception as e:
