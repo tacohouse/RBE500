@@ -12,7 +12,6 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
-        (os.path.join('share', package_name, 'srv'), glob('srv/*.srv')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -30,7 +29,8 @@ setup(
             'basic_robot_control = final_proj.pos_example:main',
             'fwd_kin = final_proj.fwd_kin:main',
             'ik_node = final_proj.ik_node:main',
-            'ik_client = final_proj.ik_client_node:main'    
+            'ik_client = final_proj.ik_client_node:main',
+            'ik_service = final_proj.ik_service:main',    
         ],
     },
 )
